@@ -1,0 +1,8 @@
+FROM ubuntu:16.04
+RUN apt-get update && apt-get -y upgrade
+WORKDIR /opt
+ADD https://github.com/txthinking/brook/releases/download/v20180601/brook_linux_386 /opt
+EXPOSE 9999
+RUN chmod +x brook_linux_386
+CMD ./brook_linux_386 server -l :9999 -p $BROOK_PASSWORD
+
