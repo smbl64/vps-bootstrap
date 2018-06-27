@@ -1,6 +1,11 @@
+# Telegram proxy configs. TG_SECRET should be 32 hexadecimal digits (0-9, a-f)
 TG_PORT=
 TG_SECRET=
+
+# Brook configs
 BROOK_PORT=
 BROOK_PASSWORD=
+
+# Shadowsocks configs
 SS_PORT=
 SS_PASSWORD=
