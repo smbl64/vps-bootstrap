@@ -1,0 +1,18 @@
+FROM ubuntu:16.04
+
+RUN apt update && apt install -y git curl build-essential libssl-dev zlib1g-dev
+
+RUN git clone https://github.com/TelegramMessenger/MTProxy /mtproxy/source \
+    && cd mtproxy/source \
+    && make \
+    && cd objs/bin \
+    && mkdir -p /mtproxy/bin/ \
+    && cp mtproto-proxy /mtproxy/bin/
+
+WORKDIR /mtproxy/bin
+COPY tg-entry-point.sh .
+RUN curl -s https://core.telegram.org/getProxySecret -o proxy-secret
+RUN curl -s https://core.telegram.org/getProxyConfig -o proxy-multi.conf
+
+EXPOSE 443
+CMD ./tg-entry-point.sh $TG_SECRET

@@ -15,12 +15,12 @@ apt-get update
 apt-cache policy docker-ce
 apt-get install -y docker-ce
 
-
 # Shadowsocks
-docker run --name=shadowsocks$SS_PORT --restart=always -p $SS_PORT:$SS_PORT -d tommylau/shadowsocks -s 0.0.0.0 -p $SS_PORT -k $SS_PASSWORD -m aes-256-ctr
+docker run --name=ss1 --restart always -p $SS_PORT:$SS_PORT -d tommylau/shadowsocks -s 0.0.0.0 -p $SS_PORT -k $SS_PASSWORD -m aes-256-ctr
 
 # Telegram MTProto
-docker run -d --name=tg1 -p$TG_PORT:$TG_PORT -v proxy-config:/data -e SECRET=$TG_SECRET telegrammessenger/proxy:latest
+docker build -t mtproto-proxy -f Telegram-Dockerfile .
+docker run -d -p $TG_PORT:443 -e TG_SECRET=$TG_SECRET --restart always --name tg1 mtproto-proxy
 
 # Brook
 docker build -t brook -f Brook-Dockerfile .
